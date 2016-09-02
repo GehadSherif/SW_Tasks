@@ -3,7 +3,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 public class connection extends javax.swing.JFrame {
 
-   
     public connection() {
         initComponents();
     }
@@ -63,41 +62,35 @@ public class connection extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-DefaultTableModel model=(DefaultTableModel)t1.getModel();
-try{
-Class.forName("java.sql.Driver");
-Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/graduation","root","");
-Statement stmt= con.createStatement();
-String query ="select *from student;";
-ResultSet rs =stmt.executeQuery(query);
-while (rs.next()){
-    //String sr =rs.getString(query);
-    String c1=rs.getString("ssn");
-    String c2=rs.getString("fname");
-    String c3=rs.getString("lname");
-    String c4=rs.getString("faculty");
-    String c5=rs.getString("projectname");
+   DefaultTableModel model=(DefaultTableModel)t1.getModel();
+   try{
+      Class.forName("java.sql.Driver");
+      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/graduation","root","");
+      Statement stmt= con.createStatement();
+      String query ="select *from student;";
+      ResultSet rs =stmt.executeQuery(query);
+      
+      while (rs.next()){
+          String c1=rs.getString("ssn");
+          String c2=rs.getString("fname");
+          String c3=rs.getString("lname");
+          String c4=rs.getString("faculty");
+          String c5=rs.getString("projectname");
     
-    model.addRow(new Object[]{c1,c2,c3,c4,c5});
-}
-rs.close();
-stmt.close();
-con.close();
-}
-catch(Exception e){
-    JOptionPane.showMessageDialog(this,"Error in connectivity");
-    
-}
+          model.addRow(new Object[]{c1,c2,c3,c4,c5});
+        }  
+   rs.close();
+   stmt.close();
+   con.close();
+   }
+    catch(Exception e){
+       JOptionPane.showMessageDialog(this,"Error in connectivity");
+     }
                                      
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    
+  
     public static void main(String args[]) {
        
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -121,7 +114,7 @@ catch(Exception e){
             public void run() {
                 new connection().setVisible(true);
             }
-        });
+             });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
