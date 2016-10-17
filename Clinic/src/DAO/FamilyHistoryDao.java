@@ -1,7 +1,7 @@
 package DAO;
 
 import Connection.MysqlConnection;
-import Tables.DrugsTaken;
+import Tables.FamilyHistory;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,33 +10,30 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DrugsTakenDao {
+public class FamilyHistoryDao {
 
-    public ArrayList<DrugsTaken> GetAllDrugs() {
+    public ArrayList<FamilyHistory> GetAllFamilyHistoryy() {
 
-        String query = "select *from drugs_taken";
+        String query = "select *from family_history";
         MysqlConnection con = MysqlConnection.getInstance();
         Connection connect = con.getConnection();
         Statement statement = null;
-        ArrayList<DrugsTaken> drugs = new ArrayList<>();
+        ArrayList<FamilyHistory> familyhistory = new ArrayList<>();
         try {
 
             statement = connect.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
-                DrugsTaken drugstaken = new DrugsTaken();
-                drugstaken.setIdPatient(rs.getInt("IdPatient"));
-                // personaldata.setiD(rs.getInt("ID"));
-                drugstaken.setNumber(rs.getInt("Number"));
-                drugstaken.setMedicineName(rs.getString("MedicineName"));
-                drugstaken.setDosage(rs.getInt("Dosage"));
-                drugstaken.setStartDate(rs.getDate("StartDate"));
-                drugstaken.setEndDate(rs.getDate("EndDate"));
-                drugstaken.setStillTakingIt(rs.getString("StillTakingIt"));
+                FamilyHistory familyhistoryy = new FamilyHistory();
+                familyhistoryy.setiDPatient(rs.getString("IDPatient"));
+                familyhistoryy.setType_illness(rs.getString("typeofillness"));
+                familyhistoryy.setFamily_member(rs.getString("FamilyMemeberWhoHaveSameIllness"));
+                familyhistoryy.setDescription(rs.getString("Description"));
 
-                drugs.add(drugstaken);
+                familyhistory.add(familyhistoryy);
             }
+
         } catch (Exception Ex) {
             System.out.print(Ex.getMessage());
         } finally {
@@ -44,18 +41,19 @@ public class DrugsTakenDao {
                 connect.close();
                 statement.close();
             } catch (SQLException ex) {
-                Logger.getLogger(DrugsTakenDao.class.getName()).log(Level.WARNING, "trouble dtected", ex);
+                Logger.getLogger(FamilyHistoryDao.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
 
-        return drugs;
+        return familyhistory;
 
     }
-
-    public int InsertDrugsTaken() {
+    
+    
+    public int InsertFamilyHistory() {
         int affected = 0;
-        String query = "INSERT INTO drugs_taken VALUES (3 ,'4' ,'netlook' ,1,'2016-09-05','2016-10-05','yes')";
+        String query = "INSERT INTO family_history VALUES ('4' ,'headaache' ,'brother' ,'')";
         Statement statement;
         MysqlConnection con = MysqlConnection.getInstance();
         Connection connect = con.getConnection();
@@ -71,9 +69,9 @@ public class DrugsTakenDao {
 
     }
 
-    public int DeleteDrugsTaken() {
+    public int DeleteFamilyHistory() {
         int affected = 0;
-        String query = "DELETE FROM drugs_taken WHERE Number=3";
+        String query = "DELETE FROM family_history WHERE IDPatient=4";
         Statement statement;
         MysqlConnection con = MysqlConnection.getInstance();
         Connection connect = con.getConnection();
@@ -90,5 +88,6 @@ public class DrugsTakenDao {
         return affected;
 
     }
+
 
 }

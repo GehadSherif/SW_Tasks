@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class DrugsTaken {
 
-    private int number;
+    private int number;//if the patient takes more than a drug
     private int idPatient;
     private String medicineName;
     private int dosage;
@@ -18,23 +18,21 @@ public class DrugsTaken {
 
     public void setIdPatient(int idPatient) {
         this.idPatient = idPatient;
-        System.out.print("  id_Patient:"+idPatient);
+        System.out.print("  id_Patient:" + idPatient);
     }
-    
-    
+
 //    public DrugsTaken(int idPatient) {
 //        this.idPatient = idPatient;
 //        System.out.println("  id_Patient:"+idPatient);
 //    }
-
     public int getNumber() {
         return number;
     }
 
     public void setNumber(int number) {
         this.number = number;
-        System.out.print("  Number:"+number);
-        
+        System.out.print("  Number:" + number);
+
     }
 
     public String getMedicineName() {
@@ -43,7 +41,7 @@ public class DrugsTaken {
 
     public void setMedicineName(String medicineName) {
         this.medicineName = medicineName;
-        System.out.print(String.format("  Medicine Name:%s",medicineName));
+        System.out.print(String.format("  Medicine Name:%s", medicineName));
     }
 
     public int getDosage() {
@@ -52,7 +50,7 @@ public class DrugsTaken {
 
     public void setDosage(int dosage) {
         this.dosage = dosage;
-        System.out.print("  Dosage:"+dosage);
+        System.out.print("  Dosage:" + dosage);
     }
 
     public Date getStartDate() {
@@ -79,10 +77,7 @@ public class DrugsTaken {
 
     public void setStillTakingIt(String stillTakingIt) {
         this.stillTakingIt = stillTakingIt;
-        System.out.print(String.format("  Still Taking It:%s",stillTakingIt));
+        System.out.println(String.format("  Still Taking It:%s", stillTakingIt));
     }
-    
 
 }
-
-    

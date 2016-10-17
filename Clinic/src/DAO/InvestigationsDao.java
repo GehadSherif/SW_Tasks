@@ -1,7 +1,7 @@
 package DAO;
 
 import Connection.MysqlConnection;
-import Tables.DrugsTaken;
+import Tables.Investigations;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,33 +10,33 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DrugsTakenDao {
+public class InvestigationsDao {
 
-    public ArrayList<DrugsTaken> GetAllDrugs() {
+    public ArrayList<Investigations> GetAllInvestigationss() {
 
-        String query = "select *from drugs_taken";
+        String query = "select *from investigations";
         MysqlConnection con = MysqlConnection.getInstance();
         Connection connect = con.getConnection();
         Statement statement = null;
-        ArrayList<DrugsTaken> drugs = new ArrayList<>();
+        ArrayList<Investigations> investigations = new ArrayList<>();
         try {
 
             statement = connect.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
-                DrugsTaken drugstaken = new DrugsTaken();
-                drugstaken.setIdPatient(rs.getInt("IdPatient"));
-                // personaldata.setiD(rs.getInt("ID"));
-                drugstaken.setNumber(rs.getInt("Number"));
-                drugstaken.setMedicineName(rs.getString("MedicineName"));
-                drugstaken.setDosage(rs.getInt("Dosage"));
-                drugstaken.setStartDate(rs.getDate("StartDate"));
-                drugstaken.setEndDate(rs.getDate("EndDate"));
-                drugstaken.setStillTakingIt(rs.getString("StillTakingIt"));
+                Investigations investigation = new Investigations();
+                investigation.setNo(rs.getString("No"));
+                investigation.setIDPatient(rs.getString("IDPatient"));
+                investigation.setTestName(rs.getString("TestName"));
+                investigation.setTestType(rs.getString("TestType"));
+                investigation.setDate(rs.getDate("Date"));
+                investigation.setReport(rs.getString("Report"));
+                investigation.setAdditionalAttachment(rs.getBlob("AdditionalAttachment"));
 
-                drugs.add(drugstaken);
+                investigations.add(investigation);
             }
+
         } catch (Exception Ex) {
             System.out.print(Ex.getMessage());
         } finally {
@@ -44,18 +44,17 @@ public class DrugsTakenDao {
                 connect.close();
                 statement.close();
             } catch (SQLException ex) {
-                Logger.getLogger(DrugsTakenDao.class.getName()).log(Level.WARNING, "trouble dtected", ex);
+                Logger.getLogger(InvestigationsDao.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
 
-        return drugs;
+        return investigations;
 
     }
-
-    public int InsertDrugsTaken() {
+public int InsertInvestigations() {
         int affected = 0;
-        String query = "INSERT INTO drugs_taken VALUES (3 ,'4' ,'netlook' ,1,'2016-09-05','2016-10-05','yes')";
+        String query = "INSERT INTO investigations VALUES ('3' ,'4' ,'cbc' ,'lab','2016-08-12','frfer','')";
         Statement statement;
         MysqlConnection con = MysqlConnection.getInstance();
         Connection connect = con.getConnection();
@@ -71,9 +70,9 @@ public class DrugsTakenDao {
 
     }
 
-    public int DeleteDrugsTaken() {
+    public int DeleteInvestigations() {
         int affected = 0;
-        String query = "DELETE FROM drugs_taken WHERE Number=3";
+        String query = "DELETE FROM investigations WHERE IDPatient=4";
         Statement statement;
         MysqlConnection con = MysqlConnection.getInstance();
         Connection connect = con.getConnection();
@@ -90,5 +89,6 @@ public class DrugsTakenDao {
         return affected;
 
     }
+
 
 }

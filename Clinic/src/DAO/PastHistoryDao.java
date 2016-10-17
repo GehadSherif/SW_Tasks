@@ -1,7 +1,7 @@
 package DAO;
 
 import Connection.MysqlConnection;
-import Tables.DrugsTaken;
+import Tables.PastHistory;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,33 +10,34 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DrugsTakenDao {
+public class PastHistoryDao {
 
-    public ArrayList<DrugsTaken> GetAllDrugs() {
+    public ArrayList<PastHistory> GetAllPastHistoryy() {
 
-        String query = "select *from drugs_taken";
+        String query = "select *from past_history";
         MysqlConnection con = MysqlConnection.getInstance();
         Connection connect = con.getConnection();
         Statement statement = null;
-        ArrayList<DrugsTaken> drugs = new ArrayList<>();
+        ArrayList<PastHistory> pasthistorys = new ArrayList<>();
         try {
 
             statement = connect.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
-                DrugsTaken drugstaken = new DrugsTaken();
-                drugstaken.setIdPatient(rs.getInt("IdPatient"));
-                // personaldata.setiD(rs.getInt("ID"));
-                drugstaken.setNumber(rs.getInt("Number"));
-                drugstaken.setMedicineName(rs.getString("MedicineName"));
-                drugstaken.setDosage(rs.getInt("Dosage"));
-                drugstaken.setStartDate(rs.getDate("StartDate"));
-                drugstaken.setEndDate(rs.getDate("EndDate"));
-                drugstaken.setStillTakingIt(rs.getString("StillTakingIt"));
+                PastHistory pasthistory = new PastHistory();
+                pasthistory.setiDPatient(rs.getString("IDPatient"));
+                pasthistory.setSurgeries(rs.getString("Surgeries"));
+                pasthistory.setInjuriesOrAccidents(rs.getString("InjuriesOrAccidents"));
+                pasthistory.setHcv(rs.getString("Hcv"));
+                pasthistory.setHbv(rs.getString("Hbv"));
+                pasthistory.setTb(rs.getString("Tb"));
+                pasthistory.setBloodtransfusion(rs.getString("Bloodtransfusion"));
+                pasthistory.setBilharziasis(rs.getString("Bilharziasis"));
 
-                drugs.add(drugstaken);
+                pasthistorys.add(pasthistory);
             }
+
         } catch (Exception Ex) {
             System.out.print(Ex.getMessage());
         } finally {
@@ -44,18 +45,18 @@ public class DrugsTakenDao {
                 connect.close();
                 statement.close();
             } catch (SQLException ex) {
-                Logger.getLogger(DrugsTakenDao.class.getName()).log(Level.WARNING, "trouble dtected", ex);
+                Logger.getLogger(PersonalDataDao.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
 
-        return drugs;
+        return pasthistorys;
 
     }
 
-    public int InsertDrugsTaken() {
+    public int InsertPastHistory() {
         int affected = 0;
-        String query = "INSERT INTO drugs_taken VALUES (3 ,'4' ,'netlook' ,1,'2016-09-05','2016-10-05','yes')";
+        String query = "INSERT INTO past_history VALUES ('6' ,'yes' ,'no' ,'yes' ,'yes' ,'no' ,'no' ,'no')";
         Statement statement;
         MysqlConnection con = MysqlConnection.getInstance();
         Connection connect = con.getConnection();
@@ -71,9 +72,9 @@ public class DrugsTakenDao {
 
     }
 
-    public int DeleteDrugsTaken() {
+    public int DeletePastHistory() {
         int affected = 0;
-        String query = "DELETE FROM drugs_taken WHERE Number=3";
+        String query = "DELETE FROM past_history WHERE IDPatient=6";
         Statement statement;
         MysqlConnection con = MysqlConnection.getInstance();
         Connection connect = con.getConnection();

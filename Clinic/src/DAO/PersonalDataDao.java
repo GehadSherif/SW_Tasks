@@ -18,7 +18,7 @@ public class PersonalDataDao {
         MysqlConnection con = MysqlConnection.getInstance();
         Connection connect = con.getConnection();
         Statement statement = null;
-        ArrayList<PersonalData> personaldatas = new ArrayList<PersonalData>();
+        ArrayList<PersonalData> personaldatas = new ArrayList<>();
         try {
 
             statement = connect.createStatement();
@@ -26,7 +26,6 @@ public class PersonalDataDao {
 
             while (rs.next()) {
                 PersonalData personaldata = new PersonalData(rs.getInt("ID"));
-                // personaldata.setiD(rs.getInt("ID"));
                 personaldata.setPatientName(rs.getString("PatientName"));
                 personaldata.setBirthDate(rs.getDate("BirthDate"));
                 personaldata.setPlaceOfBirth(rs.getString("PlaceOfBirth"));
@@ -45,6 +44,7 @@ public class PersonalDataDao {
             }
 
         } catch (Exception Ex) {
+            System.out.print(Ex.getMessage());
         } finally {
             try {
                 connect.close();
@@ -59,18 +59,19 @@ public class PersonalDataDao {
 
     }
 
-    public int InsertPersonalData(PersonalData personaldata) {
+    public int InsertPersonalData() {
+        //public int InsertPersonalData(PersonalData personaldata) {
         int affected = 0;
-        String query = "INSERT INTO personal_data VALUES ('" + personaldata.getiD() + "','" + personaldata.getPatientName() + "','" + personaldata.getBirthDate() + "','" + personaldata.getPlaceOfBirth() + "','" + personaldata.getGender() + "','" + personaldata.getNationality() + "','" + personaldata.getCurrentAddress() + "','" + personaldata.getCityAddress() + "','" + personaldata.getMaritalStatus() + "','" + personaldata.getOffspring() + "','" + personaldata.getAgeOfYoungestOffspring() + "','" + personaldata.getWorkNature() + "','" + personaldata.getPhoneNumber() + "','" + personaldata.geteMail() + "')";
-        //String query = "INSERT INTO personal_data VALUES (3 ,'ahmed' ,'june,5,1994' ,'cairo','male' ,'egyptian' , 212 , ,' single' ,1 , 15 ,' 0115751099' , 'ahmed@yahoo.com')";
-        Statement statement = null;
+        //String query = "INSERT INTO personal_data VALUES ('" + personaldata.getiD() + "','" + personaldata.getPatientName() + "','" + personaldata.getBirthDate() + "','" + personaldata.getPlaceOfBirth() + "','" + personaldata.getGender() + "','" + personaldata.getNationality() + "','" + personaldata.getCurrentAddress() + "','" + personaldata.getCityAddress() + "','" + personaldata.getMaritalStatus() + "','" + personaldata.getOffspring() + "','" + personaldata.getAgeOfYoungestOffspring() + "','" + personaldata.getWorkNature() + "','" + personaldata.getPhoneNumber() + "','" + personaldata.geteMail() + "')";
+        String query = "INSERT INTO personal_data VALUES (7 ,'ahmed' ,'1995-06-04' ,'cairo','male' ,'egyptian' , 222,'cairo',' single' ,1 , 15 ,'hard',' 0115751099', 'ahmed@yahoo.com')";
+        Statement statement ;
         MysqlConnection con = MysqlConnection.getInstance();
         Connection connect = con.getConnection();
-
         try {
             statement = connect.createStatement();
             affected = statement.executeUpdate(query);
         } catch (SQLException ex) {
+            System.out.print(ex.getMessage());
             Logger.getLogger(PersonalDataDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -78,22 +79,23 @@ public class PersonalDataDao {
 
     }
 
-    ////////////////
-//    public void delete(int ID) {
-//
-//        MysqlConnection con = MysqlConnection.getInstance();
-//        Connection connect = con.getConnection();
-//        PreparedStatement statement = null;
-//
-//        try {
-//            String query = "DELETE FROM personal_data WHERE ID=1 ";
-//
-//            statement = connect.prepareStatement(query);
-//            statement.setInt(1, ID);
-//            statement.executeUpdate(query);
-//            JOptionPane.showMessageDialog(null, "Patient Deleted!");
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(null, "There is no such ID!");
-//        }
-//    }
+    public int DeletePersonalData() {
+        int affected = 0;
+        String query = "DELETE FROM personal_data WHERE iD=7";
+        Statement statement ;
+        MysqlConnection con = MysqlConnection.getInstance();
+        Connection connect = con.getConnection();
+
+        try {
+            statement = connect.createStatement();
+            affected = statement.executeUpdate(query);
+            
+        } catch (SQLException ex) {
+            System.out.print(ex.getMessage());
+            Logger.getLogger(PersonalDataDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return affected;
+
+    }
 }
